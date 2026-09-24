@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#0b4ea2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SIM Assistant">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Tourist SIM Customer Quiz</title>
+<style>
+:root{--blue:#0b4ea2;--yellow:#ffd400}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;font-family:Arial,Helvetica,sans-serif;color:#000}
+.app{width:min(740px,100%);margin:auto;padding:14px}
+.hero{background:linear-gradient(135deg,#0b4ea2,#1769c2);color:#fff;border-radius:22px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:150px;height:150px;background:#ffd400;border-radius:50%;right:-65px;top:-70px}
+.brand{font-size:12px;font-weight:900;letter-spacing:.12em;position:relative;z-index:1}
+h1{font-size:26px;margin:7px 0 4px;font-weight:900;position:relative;z-index:1}
+.sub{font-size:13px;color:#fff;font-weight:700;position:relative;z-index:1}
+.progress{height:7px;background:#dfe7f1;border-radius:99px;overflow:hidden;margin:14px 0}
+.bar{height:100%;background:#ffd400;transition:.25s}
+.card{background:#fff;border:1px solid #d8e0ea;border-radius:20px;padding:20px}
+.qno{display:inline-block;background:#ffd400;color:#000;border-radius:99px;padding:6px 10px;font-size:12px;font-weight:900;margin-bottom:12px}
+.cn{font-size:23px;font-weight:900;line-height:1.25;color:#000}
+.en{font-size:13px;color:#000;font-weight:700;margin:5px 0 17px}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.choice{min-height:64px;text-align:left;border:2px solid #bfc9d6;background:#fff;border-radius:14px;padding:12px 14px;cursor:pointer;color:#000;font:inherit}
+.choice:hover{border-color:#0b4ea2}
+.choice.selected{background:#ffd400;border-color:#0b4ea2;color:#000}
+.ct{display:block;font-size:15px;font-weight:900;color:#000}
+.et{display:block;font-size:11px;color:#000;font-weight:700;margin-top:3px}
+.next{width:100%;margin-top:15px;border:0;border-radius:14px;background:#0b4ea2;color:#fff;font-weight:900;padding:14px;min-height:48px;font:inherit;cursor:pointer}
+.next:disabled{opacity:.4;cursor:not-allowed}
+.summary{text-align:center;padding:6px 0 18px}
+.check{width:58px;height:58px;border-radius:50%;background:#e9f7ef;color:#13834a;display:grid;place-items:center;font-size:28px;margin:auto auto 10px}
+.summary h2{margin:0;font-size:23px;color:#000;font-weight:900}
+.summary p{margin:5px 0 0;color:#000;font-size:13px;font-weight:700}
+.result{border:2px solid #ffd400;background:#fffdf0;border-radius:14px;padding:13px 14px;margin-bottom:9px;text-align:left}
+.rl{font-size:11px;color:#000;font-weight:700;margin-bottom:3px}
+.rv{font-size:15px;font-weight:900;color:#000}
+.sales{margin-top:14px;border-radius:15px;background:#e8f3ff;border:2px solid #79b7ff;color:#000;padding:15px;text-align:left}
+.sales strong{display:block;font-size:18px;margin-bottom:5px;color:#000}
+.sales span{font-size:13px;color:#000;font-weight:700}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.secondary{border:2px solid #bfc9d6;background:#fff;color:#000;border-radius:13px;padding:12px;font-weight:900;cursor:pointer;font:inherit}
+@media(max-width:500px){.choices{grid-template-columns:1fr}.card{padding:16px}.cn{font-size:21px}}
+
+.welcome-card{text-align:center;padding:28px 22px}
+.welcome-logo{display:flex;justify-content:center;margin-bottom:22px}
+.cd-mark{display:inline-flex;align-items:center;justify-content:center;background:#ffd400;color:#000;font-weight:900;font-size:25px;padding:13px 22px;border-radius:15px;letter-spacing:-1px}
+.welcome-cn{font-size:21px;line-height:1.45;font-weight:900;color:#000;margin:12px 0}
+.welcome-en{font-size:14px;line-height:1.5;font-weight:700;color:#000;margin-bottom:22px}
+.recommend{margin-top:16px;border:2px solid #ffd400;background:#fffdf0;border-radius:16px;padding:16px;text-align:left}
+.recommend-title{font-size:12px;font-weight:900;color:#000;letter-spacing:.05em}
+.recommend-plan{font-size:25px;font-weight:900;color:#000;margin:4px 0}
+.recommend-validity{font-size:14px;font-weight:900;color:#000;margin-bottom:9px}
+.benefits{display:grid;gap:6px}.benefit{font-size:13px;font-weight:800;color:#000}
+.longterm{margin-top:16px;border:2px solid #79b7ff;background:#f7fbff;border-radius:16px;padding:15px;text-align:left}
+.longterm-title{font-size:17px;font-weight:900;color:#000;margin-bottom:10px}
+.plan-card{background:#fff;border:1px solid #c7d2df;border-radius:13px;padding:12px;margin-top:9px}
+.plan-name{font-size:18px;font-weight:900;color:#000}.plan-detail{font-size:12px;font-weight:700;color:#000;margin-top:3px;line-height:1.45}
+.postpaid{border:2px solid #0b4ea2}
+</style>
+</head>
+<body>
+<div class="app">
+<div id="welcome" class="card welcome-card">
+  <div class="welcome-logo"><div class="cd-mark">CelcomDigi</div></div>
+  <div class="welcome-cn">购买SIM卡前，请回答以下问题，帮助我们了解您的需求，并推荐适合您的配套。</div>
+  <div class="welcome-en">Before purchasing a SIM card, please answer a few questions so we can understand your needs and find a suitable plan.</div>
+  <button id="startBtn" class="next">LET'S START / 开始</button>
+</div>
+<div id="quizArea" style="display:none">
+  <div class="progress"><div id="bar" class="bar" style="width:25%"></div></div>
+  <div id="screen"></div>
+</div>
+</div>
+<script>
+const questions=[
+ {cn:"您在马来西亚会停留多久？",en:"How long will you stay in Malaysia?",opts:[
+ ["1–7天","1–7 days"],["8–14天","8–14 days"],["15–30天","15–30 days"],["30–90天","30–90 days"],["超过3个月","More than 3 months"]]},
+ {cn:"您想使用这张SIM卡临时还是长期使用？",en:"Do you need this SIM temporarily or long term?",opts:[
+ ["临时使用","Temporary use"],["长期使用","Long-term use"]]},
+ {cn:"您的身份是？",en:"What is your purpose in Malaysia?",opts:[
+ ["游客","Tourist"],["学生","Student"],["工作人士","Worker / Employee"]]},
+ {cn:"您想使用哪种付款方式？",en:"How would you like to pay?",opts:[
+ ["现金","Cash"],["QR支付 / Alipay / WeChat Pay","QR payment / Alipay / WeChat Pay"],["Visa / Mastercard","Visa / Mastercard"]]}
+];
+
+let answers=[],step=0;
+const welcome=document.getElementById("welcome");
+const quizArea=document.getElementById("quizArea");
+const screen=document.getElementById("screen");
+const bar=document.getElementById("bar");
+
+document.getElementById("startBtn").onclick=()=>{
+ welcome.style.display="none"; quizArea.style.display="block";
+ window.scrollTo({top:0,behavior:"smooth"}); render();
+};
+
+function render(){
+ const q=questions[step];
+ bar.style.width=((step+1)/questions.length*100)+"%";
+ screen.innerHTML=`<section class="card">
+ <div class="qno">QUESTION ${step+1} / ${questions.length}</div>
+ <div class="cn">${q.cn}</div><div class="en">${q.en}</div>
+ <div class="choices">${q.opts.map((o,i)=>`<button class="choice" data-i="${i}">
+ <span class="ct">${o[0]}</span><span class="et">${o[1]}</span></button>`).join("")}</div>
+ <button id="next" class="next" disabled>${step===questions.length-1?"查看结果 / View Result":"下一题 / Next Question"}</button>
+ </section>`;
+ let selected=-1;
+ document.querySelectorAll(".choice").forEach(btn=>btn.onclick=()=>{
+   document.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));
+   btn.classList.add("selected"); selected=Number(btn.dataset.i);
+   document.getElementById("next").disabled=false;
+ });
+ document.getElementById("next").onclick=()=>{
+   answers[step]=q.opts[selected];
+   if(step<questions.length-1){step++;render();}else showResult();
+ };
+}
+
+function touristRecommendation(){
+ const stay=answers[0]?.[0]||"";
+ if(stay==="1–7天") return {name:"RM25 Tourist SIM",validity:"7 Days",detail:["Unlimited Data","Hotspot","Unlimited Calls"],alt:"RM35 · 14 Days"};
+ if(stay==="8–14天") return {name:"RM35 Tourist SIM",validity:"14 Days",detail:["Unlimited Data","Hotspot","Unlimited Calls"],alt:"RM60 · 30 Days"};
+ if(stay==="15–30天") return {name:"RM60 Tourist SIM",validity:"30 Days",detail:["Unlimited Data","Hotspot","Unlimited Calls"],alt:"RM90 · 90 Days"};
+ return {name:"RM90 Tourist SIM",validity:"90 Days",detail:["Unlimited Data","Hotspot","Unlimited Calls"],alt:"RM60 · 30 Days"};
+}
+
+function showResult(){
+ bar.style.width="100%";
+ const labels=[["停留时间","Stay duration"],["SIM使用方式","SIM usage"],["身份","Purpose"],["付款方式","Payment method"]];
+ const temporary=answers[1]?.[0]==="临时使用";
+ const tourist=answers[2]?.[0]==="游客";
+ let recommendation="";
+ if(temporary && tourist){
+   const p=touristRecommendation();
+   recommendation=`<div class="recommend">
+    <div class="recommend-title">🎯 RECOMMENDED PLAN / 推荐配套</div>
+    <div class="recommend-plan">${p.name}</div>
+    <div class="recommend-validity">${p.validity}</div>
+    <div class="benefits">${p.detail.map(x=>`<div class="benefit">✓ ${x}</div>`).join("")}</div>
+    <div class="plan-card"><div class="plan-detail">Other option / 其他选择：<b>${p.alt}</b></div></div>
+   </div>`;
+ } else {
+   recommendation=`<div class="longterm">
+    <div class="longterm-title">🔵 LONG-TERM SIM PLANS / 长期SIM配套</div>
+    <div class="plan-card"><div class="plan-name">RM40</div><div class="plan-detail">50GB Data · Hotspot · Unlimited Calls</div></div>
+    <div class="plan-card"><div class="plan-name">RM45</div><div class="plan-detail">150GB Data · Hotspot · Unlimited Calls</div></div>
+    <div class="plan-card"><div class="plan-name">RM60</div><div class="plan-detail">Unlimited Data · Hotspot · Unlimited Calls</div></div>
+    <div class="plan-card postpaid"><div class="plan-name">Postpaid RM50</div><div class="plan-detail"><b>RM60 → RM50 PROMO</b><br>Unlimited Speed · 500GB Data · Unlimited Calls</div></div>
+   </div>`;
+ }
+ screen.innerHTML=`<section class="card">
+ <div class="summary"><div class="check">✓</div><h2>客户资料完成</h2><p>Customer profile completed</p></div>
+ ${answers.map((a,i)=>`<div class="result"><div class="rl">${labels[i][0]} · ${labels[i][1]}</div><div class="rv">${a[0]} — ${a[1]}</div></div>`).join("")}
+ ${recommendation}
+ <div class="sales"><strong>💡 Sales Note</strong><span>Customer profile is ready for SIM recommendation. Please explain the available plan options.</span></div>
+ <div class="actions"><button id="restart" class="secondary">重新开始<br><small>Start Again</small></button><button id="new" class="next" style="margin-top:0">新客户<br><small>New Customer</small></button></div>
+ </section>`;
+ document.getElementById("restart").onclick=reset;
+ document.getElementById("new").onclick=reset;
+}
+function reset(){answers=[];step=0;welcome.style.display="block";quizArea.style.display="none";window.scrollTo({top:0,behavior:"smooth"});}
+</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"));}</script></body>
+</html>
